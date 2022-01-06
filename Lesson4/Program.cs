@@ -15,7 +15,7 @@ namespace Lesson4
             Console.WriteLine("Enter third personal data");
             string thirdInfo = GetFullName();
             
-            Console.WriteLine($"Users:\n{firstInfo} \n{secondInfo} \n{thirdInfo}");
+            Console.WriteLine($"Users: \n{firstInfo} \n{secondInfo} \n{thirdInfo}");
         }
         static string GetFullName()
         {
