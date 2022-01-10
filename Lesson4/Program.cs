@@ -4,28 +4,57 @@ namespace Lesson4
 {
     class Program
     {
+        enum season { Seasons, Winter, Spring, Summer, Autumn }
+        static season OfMonth(int month)
+        {
+            try
+            {
+                if (month <= 0 || month > 12)
+                    throw new Exception("Ошибка! Введите число от 1 до 12");
+                switch ((month % 12) / 3)
+                {
+                    case 0:
+                        return season.Winter;
+                    case 1:
+                        return season.Spring;
+                    case 2:
+                        return season.Summer;
+                    default: 
+                        return season.Autumn;
+                }
+            }
+            catch (Exception error)
+            {
+                Console.WriteLine(error.Message);
+                return season.Seasons;
+            }
+        }
+        static string Season(season s)
+        {
+            switch (s)
+            {
+                case season.Winter:
+                    return "Зима";
+                case season.Spring:
+                    return "Весна";
+                case season.Summer:
+                    return "Лето";
+                case season.Autumn:
+                    return "Осень";
+                default: return "";
+            }
+        }
         static void Main(string[] args)
         {
-            Console.WriteLine("Enter first personal data");
-            string firstInfo = GetFullName();
-            
-            Console.WriteLine("Enter second personal data");
-            string secondInfo = GetFullName();
-            
-            Console.WriteLine("Enter third personal data");
-            string thirdInfo = GetFullName();
-            
-            Console.WriteLine($"Users:\n{firstInfo} \n{secondInfo} \n{thirdInfo}");
+            do
+            {
+                Console.WriteLine("Введите номер месяца: ");
+                int month = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine(Season(OfMonth(month)));
+            }
+            while (true);
         }
-        static string GetFullName()
-        {
-            Console.WriteLine("Please enter your firstName, lastName and patronymic");
-            string firstName = Console.ReadLine();
-            string lastName = Console.ReadLine();
-            string patronymic = Console.ReadLine();
-            string infoUser = firstName + ' ' + lastName + ' ' + patronymic;
-            Console.WriteLine($"Hello {infoUser}");
-            return infoUser;
-        }
+
     }
 }
+
