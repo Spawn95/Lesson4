@@ -1,64 +1,60 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Lesson4
 {
     class Program
     {
-        static void Main(string[] args)
+        enum season { Seasons, Winter, Spring, Summer, Autumn }
+        static season OfMonth(int month)
         {
-            Hello();
-            string data = RecieveData();
-            List<string> parts = SplitData(data);
-            List<int> numbers = ConvertData(parts);
-            int result = SummData(numbers);
-            CheckResult(result);
-
-        }
-        static void Hello()
-        {
-            Console.WriteLine("Какое то начало");
-        }
-        static string RecieveData()
-        {
-            Console.WriteLine("Введите числа с пробелом, программа выведет сумму чисел.");
-            return Console.ReadLine();
-        }
-        static List<string> SplitData(string data)
-        {
-            List<string> parts = new List<string>();
-            if (string.IsNullOrWhiteSpace(data))
+            try
             {
-                return parts;
-            }
-            parts.AddRange(data.Split(' '));
-            return parts;
-        }
-        static List<int> ConvertData(List<string> parts)
-        {
-            List<int> numbers = new List<int>();
-            foreach (var part in parts)
-            {
-                if (int.TryParse(part, out int number))
+                if (month <= 0 || month > 12)
+                    throw new Exception("Ошибка! Введите число от 1 до 12");
+                switch ((month % 12) / 3)
                 {
-                    numbers.Add(number);
+                    case 0:
+                        return season.Winter;
+                    case 1:
+                        return season.Spring;
+                    case 2:
+                        return season.Summer;
+                    default: 
+                        return season.Autumn;
                 }
             }
-            return numbers;
-        }
-        static int SummData(List<int> numbers)
-        {
-            int result = 0;
-            foreach (var number in numbers)
+            catch (Exception error)
             {
-                result += number;
+                Console.WriteLine(error.Message);
+                return season.Seasons;
             }
-            return result;
         }
-        static void CheckResult(int result)
+        static string Season(season s)
         {
-            Console.WriteLine("Сумма чисел : " + result);
+            switch (s)
+            {
+                case season.Winter:
+                    return "Зима";
+                case season.Spring:
+                    return "Весна";
+                case season.Summer:
+                    return "Лето";
+                case season.Autumn:
+                    return "Осень";
+                default: return "";
+            }
         }
+        static void Main(string[] args)
+        {
+            do
+            {
+                Console.WriteLine("Введите номер месяца: ");
+                int month = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine(Season(OfMonth(month)));
+            }
+            while (true);
+        }
+
     }
 }
 
